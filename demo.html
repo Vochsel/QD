@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>QD.js Demo</title>
+		<script type="text/javascript" src="src/qd.js"></script>
+	</head>
+	<body>
+		<input id="input_t" type="text"/>
+		<input id="input_r" type="range"/>
+		<div id="output_t"></div>
+
+		<script type="text/javascript">
+			var example_1 = QD.Data(50);
+			example_1.addInlet("input_t");
+			example_1.addInlet("input_r");
+			example_1.addOutlet("output_t", function(val, dom) {
+				dom.innerHTML = val;
+			});
+		</script>
+	</body>
+</html>
