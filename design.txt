@@ -1,0 +1,4 @@
+ - Could outlets be other variables... 
+ - Is this getting too wordy
+ - QD.GetElement can return an array which should only work in plural addOutlet(s)?
+ - Is QD.GetElement useless

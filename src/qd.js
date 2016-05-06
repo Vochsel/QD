@@ -18,32 +18,76 @@ var QD = {
 					this.inlets[i].value = this.value;
 				}
 			},
-			addInlet: function(id) {
-				//Temporary data value
-				var t = this;
-				//Get DOM reference
-				var r = document.getElementById(id);
-				//Add event listener to input of DOM
-				r.oninput = function(e) {
-					t.update(e.target.value);
+			inlet: function(doms_str) {
+				var doms = QD.Select(doms_str);
+				if(doms.constructor !== Array) {
+					QD.CreateInlet(this, doms);
+				} else {
+					for(var i = 0; i < doms.length; ++i) {
+						QD.CreateInlet(this, doms[i]);
+					}
 				}
-				//Push input reference into array of inputs
-				this.inlets.push(r);
-				//Update data value
-				this.update(this.value);
+				return this;
 			},
-			addOutlet: function(id, callback) {
-				//Get DOM reference
-				var e = document.getElementById(id)
-				//Build outlet variable with dom reference, and outlet callback
-				var out = {
-					dom:e,
-					callback:callback
-				};
-				//Push output reference
-				this.outlets.push(out);
-				//Updata data value
-				this.update(this.value);
+			outlet: function(doms_str, callback) {
+				var doms = QD.Select(doms_str);
+				if(doms.constructor !== Array) {
+					QD.CreateOutlet(this, doms, callback);
+				} else {
+					for(var i = 0; i < doms.length; ++i) {
+						QD.CreateOutlet(this, doms[i], callback);
+					}
+				}
+				return this;
+			}
+		}
+	},
+	CreateInlet: function(qd, dom) {
+		//Temporary data value
+		var t = qd;
+		//Add event listener to input of DOM
+		dom.oninput = function(e) {
+			t.update(e.target.value);
+		}
+		//Push input reference into array of inputs
+		qd.inlets.push(dom);
+		//Update data value
+		qd.update(qd.value);
+	},
+	CreateOutlet: function(qd, dom, callback) {
+		//Build outlet variable with dom reference, and outlet callback
+		var out = {
+			dom:dom,
+			callback:callback
+		};
+		//Push output reference
+		qd.outlets.push(out);
+		//Updata data value
+		qd.update(qd.value);
+	},
+	Select: function(id) {
+		var e = undefined;
+
+		//Try all dom accessors
+		if(e == undefined)
+			e = document.getElementById(id);
+		if(e == undefined)
+			e = document.getElementById(id);
+		if(e == undefined)
+			e = document.getElementsByClassName(id);
+		if(e == undefined)
+			e = document.getElementsByName(id);
+		if(e == undefined)
+			e = document.getElementsByTagName(id);
+		return e;
+	},
+	Preset: {
+		HTML: function(v, d) {
+			d.innerHTML = v;
+		},
+		Attribute: function(attr) {
+			return function(v, d) {
+				d.setAttribute(attr, v);
 			}
 		}
 	}
