@@ -46,9 +46,9 @@ var QD = {
 		//Temporary data value
 		var t = qd;
 		//Add event listener to input of DOM
-		dom.oninput = function(e) {
+		dom.addEventListener("input", function(e) {
 			t.update(e.target.value);
-		}
+		});
 		//Push input reference into array of inputs
 		qd.inlets.push(dom);
 		//Update data value
