@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>QD.js Demo</title>
+		<script type="text/javascript" src="../src/qd.js"></script>
+	</head>
+	<body>
+		<p>Expression: <input id="expression_i" type="text"/></p>
+		<p>Result: <span id="expression_o"></span> = <span id="result_o"/></span></p>
+		<script>
+		var expression = QD.Data("8 + 2").inlet("expression_i").outlet("expression_o", QD.Preset.HTML).outlet("result_o", function(v, d) {
+			d.innerHTML = eval(v);
+		});
+		</script>
+	</body>
+</html>

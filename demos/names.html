@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>QD.js Demo</title>
+		<script type="text/javascript" src="../src/qd.js"></script>
+	</head>
+	<body>
+		<p>Firstname: <input id="first_i" type="text"/></p>
+		<p>Lastname: <input  id="last_i"  type="text"/></p>
+		<p>Welcome <span id="first_o"></span> <span id="last_o"/></span>!</p>
+		<script>
+		var firstname = QD.Data("John").inlet("first_i").outlet("first_o", QD.Preset.HTML);
+		var lastname = QD.Data("Doe").inlet("last_i").outlet("last_o", QD.Preset.HTML);
+		</script>
+	</body>
+</html>

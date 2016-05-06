@@ -25,6 +25,8 @@ do.outlet("someClass", function(v, d) {
 });
 ```
 
+### Notes
+
 This library is being continuously updated. Feedback, and or suggestions are welcome
 
 Created by Ben Skinner
