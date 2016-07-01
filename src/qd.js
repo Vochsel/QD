@@ -4,6 +4,9 @@ var QD = {
 			value: val,
 			inlets: [],
 			outlets: [],
+			// ==== Update ==== //
+			// -- Param (v) : New value to be set
+			// -- Desc	  	: Update value of QD object and trigger all outlets, and reflect changes in inlets
 			update: function(v) {
 				//Update internal value
 				this.value = v;
@@ -18,6 +21,9 @@ var QD = {
 					this.inlets[i].value = this.value;
 				}
 			},
+			// ==== Inlet ==== //
+			// -- Param (doms_str) 	: Name of DOM element(s)
+			// -- Desc				: Create one or more inlets
 			inlet: function(doms_str) {
 				var doms = QD.Select(doms_str);
 				if(doms.constructor !== Array) {
@@ -29,6 +35,10 @@ var QD = {
 				}
 				return this;
 			},
+			// ==== Outlet ==== //
+			// -- Param (doms_str) 	: Name of DOM element(s)
+			// -- Param (callback) 	: Function to run on value update
+			// -- Desc				: Creates one or more outlets
 			outlet: function(doms_str, callback) {
 				var doms = QD.Select(doms_str);
 				if(doms.constructor !== Array) {
@@ -42,6 +52,10 @@ var QD = {
 			}
 		}
 	},
+	// ==== CreateInlet ==== //
+	// -- Param (qd)	 	: QD object
+	// -- Param (dom)	 	: HTML DOM reference. Used to link event listeners
+	// -- Desc	  			: Adds "input" event listener to dom, pushes dom to qd inlets. Updates qd object.
 	CreateInlet: function(qd, dom) {
 		//Temporary data value
 		var t = qd;
@@ -54,6 +68,11 @@ var QD = {
 		//Update data value
 		qd.update(qd.value);
 	},
+	// ==== CreateOutlet ==== //
+	// -- Param (qd)	 	: QD object
+	// -- Param (dom)	 	: HTML DOM reference. Used to link event listeners
+	// -- Param (callback) 	: Callback function 
+	// -- Desc	  			: Creates outlet object of dom and callback and store in qd object. Updates qd object.
 	CreateOutlet: function(qd, dom, callback) {
 		//Build outlet variable with dom reference, and outlet callback
 		var out = {
@@ -65,6 +84,10 @@ var QD = {
 		//Updata data value
 		qd.update(qd.value);
 	},
+	// ==== Select ==== //
+	// -- Param (id)	 	: String name of dom element
+	// -- Desc	  			: Tries to get element by String name.
+	// -- Return 			: Can return one or more dom objects, or undefined if not found.
 	Select: function(id) {
 		var e = undefined;
 
@@ -82,9 +105,11 @@ var QD = {
 		return e;
 	},
 	Preset: {
+		// -- Callback preset to present data in HTML
 		HTML: function(v, d) {
 			d.innerHTML = v;
 		},
+		// -- Callback preset to present data in attribute (attr)
 		Attribute: function(attr) {
 			return function(v, d) {
 				d.setAttribute(attr, v);
